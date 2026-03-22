@@ -1,0 +1,551 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=5.0">
+<title>Đề Thi Tiếng Anh – THPT Nghĩa Lộ 2026</title>
+<link href="https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,400;0,700;1,400&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{-webkit-text-size-adjust:100%}
+body{font-family:"Merriweather",serif;font-size:18px;color:#1a1208;background:#eef2f8;min-height:100vh;overflow-x:hidden}
+:root{
+  --bg:#eef2f8;--paper:#fffef9;--ink:#1a1208;--muted:#5a4e38;
+  --red:#c0392b;--gold:#c8940f;--bord:#d0cfc8;
+  --ok-bg:#d4edda;--ok-bd:#3a9e65;
+  --no-bg:#fde8e8;--no-bd:#d45555;
+  --blue:#0066ff;--blue-lt:#dbeeff;
+  --sh:0 2px 10px rgba(30,40,80,.10);
+}
+/* HEADER */
+header{background:linear-gradient(135deg,#1a3a6b 0%,#0d2550 60%,#0a1e42 100%);color:#fff;padding:16px 16px 14px;text-align:center;border-bottom:4px solid var(--gold)}
+.h-sub{font-size:15px;letter-spacing:1.5px;text-transform:uppercase;color:rgba(255,220,100,.9);font-weight:700;margin-bottom:4px}
+header h1{font-family:"Merriweather",serif;font-size:clamp(15px,3.8vw,21px);font-weight:900;line-height:1.3}
+.prog-wrap{height:5px;background:rgba(255,255,255,.15);border-radius:3px;overflow:hidden;margin-top:12px}
+.prog-bar{height:100%;background:var(--gold);width:0%;transition:width .4s ease}
+/* TIMER */
+.timer-bar{background:#0a1e42;border-bottom:2px solid #1a3a6b;padding:8px 16px;display:flex;align-items:center;justify-content:space-between}
+.timer-lbl{font-size:18px;color:rgba(255,220,100,.8);font-weight:700;letter-spacing:1px;text-transform:uppercase}
+.timer-val{font-family:"Merriweather",serif;font-size:20px;font-weight:900;color:#fff;letter-spacing:2px;min-width:60px;text-align:right}
+.timer-val.warn{color:#ff4444;animation:blink 1s infinite}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:.5}}
+.timer-ctr{font-size:18px;color:rgba(255,255,255,.55);font-weight:600}
+/* EXAM CARD */
+.exam-card{background:var(--paper);border-bottom:3px solid var(--gold);font-family:"Times New Roman",Times,serif;max-width:1000px;margin:0 auto}
+.ec-head{display:flex;border-bottom:2px solid #1a1208}
+.ec-left{flex:1;padding:12px 14px 10px;border-right:2px solid #1a1208;font-size:18px;line-height:1.8;text-align:center}
+.ec-so-lbl{font-weight:900;font-size:18px;text-transform:uppercase;letter-spacing:.3px}
+.ec-de{display:flex;align-items:center;justify-content:center;gap:5px;font-weight:700;font-size:18px;margin-top:2px}
+.ec-de-input{border:none;border-bottom:none;background:transparent;font-family:"Times New Roman",Times,serif;font-weight:900;font-size:18px;width:56px;text-align:center;outline:none;padding:0 2px;color:#1a1208;-webkit-appearance:none}
+.ec-note{font-size:16px;font-style:italic;color:#5a4e38}
+.ec-right{flex:1.5;padding:12px 14px 10px;text-align:center;display:flex;flex-direction:column;justify-content:center;gap:2px}
+.ec-kythi{font-size:18px;font-weight:900;text-transform:uppercase;letter-spacing:.4px}
+.ec-mon{font-size:18px;font-weight:700;margin-top:2px}
+.ec-time{font-size:16px;color:#5a4e38;font-style:italic}
+.ec-body{padding:12px 14px 18px;display:flex;flex-direction:column;gap:11px}
+.ec-row{display:flex;gap:10px;flex-wrap:wrap}
+.ec-field{display:flex;flex-direction:column;gap:4px;flex:1;min-width:130px}
+.ec-field-wide{flex:2;min-width:170px}
+.ec-field-sm{flex:0 0 82px;min-width:76px}
+.ec-lbl{font-family:"DM Sans",sans-serif;font-size:14px;font-weight:800;letter-spacing:.3px;text-transform:uppercase;color:#3a3020}
+.ec-in{width:100%;padding:12px 14px;border:2px solid var(--bord);border-radius:9px;font-family:"DM Sans",sans-serif;font-size:16px;font-weight:600;color:var(--ink);background:#fff;outline:none;-webkit-appearance:none;transition:border-color .15s,box-shadow .15s}
+.ec-in:focus{border-color:var(--gold);box-shadow:0 0 0 3px rgba(200,148,15,.2)}
+.ec-in.err{border-color:var(--red)!important;box-shadow:0 0 0 3px rgba(192,57,43,.15)!important}
+.ec-in::placeholder{color:#c0b08a}
+.ec-in-sm{padding:9px 10px;font-size:18px;font-family:"Merriweather",serif}
+.ec-row-box{align-items:flex-end;gap:18px;flex-wrap:wrap}
+.ec-box-group{display:flex;flex-direction:column;gap:5px}
+.ec-box-lbl{font-family:"DM Sans",sans-serif;font-size:11px;font-weight:800;letter-spacing:.5px;text-transform:uppercase;color:#3a3020}
+.ec-boxes{display:flex;gap:4px}
+.ec-box{width:28px;height:32px;border:1.5px solid #1a1208;border-radius:5px;text-align:center;font-size:14px;font-weight:900;color:#1a1208;background:#fff;outline:none;-webkit-appearance:none;transition:border-color .15s,box-shadow .15s;font-family:"Times New Roman",Times,serif}
+.ec-box:focus{border-color:var(--blue);box-shadow:0 0 0 3px rgba(0,102,255,.22);background:var(--blue-lt)}
+.ferr{display:none;color:var(--red);font-size:13px;font-weight:600;margin-top:3px}
+.ferr.show{display:block}
+@media(max-width:500px){.ec-head{flex-direction:column}.ec-left{border-right:none;border-bottom:1.5px solid #1a1208}.ec-right{text-align:left}.ec-field-wide,.ec-field-sm{flex:1 1 100%}}
+/* WRAP */
+.wrap{max-width:1000px;margin:0 auto;padding:20px 6px 120px}
+/* SECTION */
+.sec-hd{margin:32px 0 13px;padding-bottom:9px;border-bottom:2px solid var(--bord)}
+.sec-title{font-family:"Times New Roman",Times,serif;font-size:22px;font-style:normal;font-weight:800;color:var(--ink);line-height:1.6}
+/* PASSAGE */
+.passage{background:var(--paper);border:1.5px solid var(--bord);border-left:5px solid var(--gold);border-radius:10px;padding:16px 18px;margin-bottom:16px;font-family:"Merriweather",serif;font-size:18px;line-height:2.05;box-shadow:var(--sh);overflow-x:auto}
+.p-title{font-family:"Times New Roman",Times,serif;font-size:18px;font-weight:900;letter-spacing:0;text-transform:none;color:#1a1208;margin-bottom:12px;padding-bottom:8px;border-bottom:1px dashed var(--bord)}
+.blank{color:var(--red);font-weight:700}
+/* CARD */
+.card{background:var(--paper);border:2px solid var(--bord);border-radius:12px;padding:15px 13px;margin-bottom:11px;box-shadow:var(--sh)}
+.card.ok{border-color:var(--ok-bd);background:#f2fbf5}
+.card.no{border-color:var(--no-bd);background:#fef4f4}
+.qrow{display:flex;align-items:flex-start;gap:10px;margin-bottom:13px}
+.qnum{background:var(--blue);color:#fff;font-size:18px;font-weight:900;min-width:36px;height:30px;border-radius:7px;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:2px;box-shadow:0 2px 6px rgba(0,102,255,.35)}
+.qtext{font-family:"Merriweather",serif;font-size:18px;line-height:1.8;flex:1;word-break:break-word}
+/* OPTIONS */
+.opts{display:flex;flex-direction:column;gap:9px}
+.opt{display:flex;align-items:center;gap:12px;padding:12px 14px;border:2px solid var(--bord);border-radius:10px;background:var(--bg);cursor:pointer;min-height:52px;-webkit-tap-highlight-color:transparent;touch-action:manipulation;-webkit-user-select:none;user-select:none;transition:background .1s,border-color .1s,box-shadow .1s}
+.opt:active{background:#dce8f0;border-color:#8aaac0}
+.opt.sel{background:var(--blue-lt);border-color:var(--blue);border-width:2.5px;box-shadow:0 0 0 4px rgba(0,102,255,.18)}
+.opt.cor{background:var(--ok-bg);border-color:var(--ok-bd)}
+.opt.wrg{background:var(--no-bg);border-color:var(--no-bd)}
+.opt.rev{background:var(--ok-bg);border-color:var(--ok-bd)}
+.oltr{width:34px;height:34px;border-radius:50%;border:2px solid var(--bord);display:flex;align-items:center;justify-content:center;font-size:18px;font-weight:700;color:var(--muted);flex-shrink:0;transition:all .18s cubic-bezier(.34,1.56,.64,1)}
+.opt.sel .oltr{background:var(--blue);border-color:var(--blue);color:#fff;font-size:18px;font-weight:900;transform:scale(1.20);box-shadow:0 0 0 4px rgba(0,102,255,.28),0 0 14px rgba(0,102,255,.40)}
+.opt.cor .oltr{background:var(--ok-bd);border-color:var(--ok-bd);color:#fff;transform:none}
+.opt.wrg .oltr{background:var(--no-bd);border-color:var(--no-bd);color:#fff;transform:none}
+.opt.rev .oltr{background:var(--ok-bd);border-color:var(--ok-bd);color:#fff;transform:none}
+.otxt{font-family:"Merriweather",serif;font-size:18px;line-height:1.5;flex:1;word-break:break-word}
+.opt.sel .otxt{font-weight:600;color:var(--ink)}
+/* FEEDBACK */
+.fb{display:none;margin-top:10px;padding:10px 13px;border-radius:8px;font-size:18px;font-weight:600;font-family:"Merriweather",serif}
+.fb.show{display:block}
+.fb.ok{background:var(--ok-bg);color:#145c2e}
+.fb.no{background:var(--no-bg);color:#7a1f1f}
+.fb-ex{display:none;margin-top:7px;padding:9px 13px;border-radius:7px;background:#f0f4ff;border-left:4px solid var(--blue);font-size:18px;color:#1a2060;line-height:1.7;font-weight:400;font-family:"Merriweather",serif;font-style:italic}
+.fb-ex.show{display:block}
+/* ACTIONS */
+.actions{margin-top:36px;display:flex;flex-direction:column;gap:11px}
+.btn{width:100%;padding:17px 20px;border-radius:12px;border:none;font-family:"DM Sans",sans-serif;font-size:16px;font-weight:700;cursor:pointer;-webkit-tap-highlight-color:transparent;touch-action:manipulation;transition:opacity .2s,transform .12s}
+.btn:active{transform:scale(.97);opacity:.83}
+.btnp{background:var(--ink);color:var(--gold)}
+.btns{background:transparent;color:var(--ink);border:2px solid var(--bord)}
+/* DASHBOARD */
+#dash{display:none;margin-top:42px;border-radius:16px;overflow:hidden;box-shadow:0 10px 40px rgba(20,30,60,.18);border:1.5px solid var(--bord)}
+.dh{background:var(--ink);color:#fff;padding:22px 16px;text-align:center;border-bottom:3px solid var(--gold)}
+.dh-sub{font-size:10px;letter-spacing:3px;text-transform:uppercase;color:var(--gold);font-weight:700;margin-bottom:7px}
+.dh h2{font-family:"Merriweather",serif;font-size:18px;font-weight:700}
+.dstu{display:grid;grid-template-columns:1fr 1fr;background:var(--paper);border-bottom:1px solid var(--bord)}
+.scc{padding:12px 13px;border-right:1px solid var(--bord);border-bottom:1px solid var(--bord)}
+.scc:nth-child(even){border-right:none}
+.scc:nth-last-child(-n+2){border-bottom:none}
+.slbl{font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--muted);margin-bottom:3px}
+.sval{font-family:"Merriweather",serif;font-size:18px;font-weight:700;word-break:break-word}
+.dscr{display:grid;grid-template-columns:1fr 1fr 1fr;background:var(--paper);border-bottom:1px solid var(--bord)}
+.scoc{padding:22px 8px;text-align:center;border-right:1px solid var(--bord)}
+.scoc:last-child{border-right:none}
+.scn{font-family:"Merriweather",serif;font-size:40px;font-weight:700;line-height:1;margin-bottom:6px}
+.scl{font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--muted)}
+.scoc.g .scn{color:#2a7a48}.scoc.r .scn{color:var(--red)}.scoc.y .scn{color:var(--gold)}
+.dcmt{padding:18px 15px;display:flex;align-items:flex-start;gap:14px;background:var(--paper);border-bottom:1px solid var(--bord)}
+.cem{font-size:32px;flex-shrink:0;line-height:1}
+.ctxt{font-family:"Merriweather",serif;font-size:18px;font-style:italic;line-height:1.75}
+.crnk{display:inline-block;margin-top:8px;padding:4px 14px;border-radius:20px;font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase;font-style:normal;font-family:"DM Sans",sans-serif;color:#fff}
+.dshr{background:#f5f7fa;padding:15px;border-bottom:1px solid var(--bord)}
+.shlbl{font-size:18px;font-weight:700;color:var(--muted);font-family:"Merriweather",serif;margin-bottom:8px}
+.shurl{width:100%;padding:11px 12px;border:2px solid var(--bord);border-radius:9px;font-size:13px;font-family:monospace;color:var(--muted);background:#fff;outline:none;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;-webkit-appearance:none;margin-bottom:10px}
+.bcopy{width:100%;padding:14px;background:var(--gold);color:#fff;border:none;border-radius:10px;font-size:18px;font-weight:700;cursor:pointer;font-family:"Merriweather",serif;-webkit-tap-highlight-color:transparent;touch-action:manipulation;transition:opacity .2s}
+.bcopy:active{opacity:.78}
+.bcopy.copied{background:#3aa06a}
+.atbl-wrap{padding:4px 0 8px}
+.atbl-wrap h3{font-family:"Merriweather",serif;font-size:18px;padding:16px 15px 10px;color:var(--ink)}
+.atbl{width:100%;border-collapse:collapse;font-size:18px;font-family:"Merriweather",serif}
+.atbl th{background:var(--ink);color:var(--gold);padding:10px 8px;font-weight:700;font-size:11px;letter-spacing:.5px;text-transform:uppercase}
+.atbl td{padding:9px 8px;border-bottom:1px solid var(--bord);text-align:center}
+.atbl tr:nth-child(even) td{background:rgba(0,0,0,.02)}
+.ck{color:#2a7a48;font-weight:700;font-size:18px}
+.cr{color:var(--red);font-weight:700;font-size:18px}
+/* POPUP */
+.pov{display:none;position:fixed;inset:0;background:rgba(8,6,2,.82);z-index:999;align-items:center;justify-content:center;padding:16px}
+.pov.show{display:flex}
+.pbox{background:var(--paper);border-radius:16px;width:100%;max-width:430px;border:2px solid var(--gold);overflow:hidden;box-shadow:0 28px 70px rgba(0,0,0,.5);animation:popIn .26s cubic-bezier(.34,1.56,.64,1)}
+@keyframes popIn{from{opacity:0;transform:scale(.86)}to{opacity:1;transform:scale(1)}}
+.phd{background:var(--ink);padding:18px 20px;border-bottom:3px solid var(--gold)}
+.plbl{font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--gold);font-weight:700;margin-bottom:4px}
+.phd h3{font-family:"Merriweather",serif;font-size:16px;color:#fff;font-weight:700}
+.pbdy{padding:16px 20px}
+.prow{display:flex;justify-content:space-between;align-items:baseline;padding:10px 0;border-bottom:1px solid var(--bord);font-size:18px;font-family:"Merriweather",serif;gap:8px}
+.prow:last-child{border-bottom:none}
+.pk{color:var(--muted);font-weight:600;flex-shrink:0}
+.pv{font-family:"Merriweather",serif;font-weight:700;text-align:right;word-break:break-word}
+.pv.big{font-size:22px;color:var(--gold)}
+.pft{padding:14px 20px;background:#f5f7fa;border-top:1px solid var(--bord);text-align:right}
+.bclose{padding:13px 28px;background:var(--ink);color:var(--gold);border:none;border-radius:10px;font-size:18px;font-weight:700;cursor:pointer;font-family:"Merriweather",serif;-webkit-tap-highlight-color:transparent;touch-action:manipulation}
+.bclose:active{opacity:.8}
+/* STICKY */
+.ctr-bar{position:fixed;top:0;right:0;z-index:200;background:var(--ink);color:var(--gold);padding:4px 8px;font-size:10px;font-weight:700;letter-spacing:.5px;border-radius:0 0 0 6px;border-left:1.5px solid var(--gold);border-bottom:1.5px solid var(--gold);pointer-events:none;opacity:.85}
+@media(min-width:640px){
+  .wrap{padding:26px 10px 120px}
+  .ec-body{padding:14px 20px 20px}
+  .opts{flex-direction:row;flex-wrap:wrap}
+  .opt{flex:1 1 calc(50% - 5px);min-width:0}
+  .actions{flex-direction:row;justify-content:center}
+  .btn{width:auto;min-width:210px}
+  .dstu{grid-template-columns:repeat(4,1fr)}
+  .scc{border-bottom:none}
+  .scc:nth-child(even){border-right:1px solid var(--bord)}
+  .scc:last-child{border-right:none}
+  .dshr{display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+  .shlbl{margin-bottom:0;white-space:nowrap}
+  .shurl{flex:1;margin-bottom:0}
+  .bcopy{width:auto;flex-shrink:0;padding:12px 22px}
+}
+</style>
+</head>
+<body>
+
+<!-- POPUP -->
+<div class="pov" id="pov">
+  <div class="pbox">
+    <div class="phd"><div class="plbl">&#128202; Báo cáo kết quả học sinh</div><h3 id="ptitle">Kết quả bài thi</h3></div>
+    <div class="pbdy" id="pbdy"></div>
+    <div class="pft"><button class="bclose" onclick="closePop()">&#10005; Đóng</button></div>
+  </div>
+</div>
+
+<!-- HEADER -->
+<header>
+  <div class="h-sub">Sở Giáo Dục và Đào Tạo Lào Cai</div>
+  <h1 style="text-transform:uppercase">Trường THPT Nghĩa Lộ</h1>
+  <div class="prog-wrap"><div class="prog-bar" id="prog"></div></div>
+</header>
+
+<!-- TIMER BAR -->
+<div class="timer-bar">
+  <div>
+    <div class="timer-lbl">&#9201; Thời gian còn lại</div>
+    <div class="timer-ctr" id="ctr-txt">0 / 40 câu</div>
+  </div>
+  <div class="timer-val" id="timer">50:00</div>
+</div>
+
+<div class="ctr-bar" id="ctr-bar">0 / 40</div>
+
+<!-- EXAM CARD -->
+<div class="exam-card">
+  <div class="ec-head">
+    <div class="ec-left">
+      <div class="ec-so-lbl">Sở Giáo Dục và Đào Tạo Lào Cai</div>
+      <div class="ec-de">ĐỀ THAM KHẢO SỐ <input class="ec-de-input" id="eb-so" type="text" maxlength="4" placeholder="..."></div>
+      <div class="ec-note">(Đề thi có 04 trang)</div>
+    </div>
+    <div class="ec-right">
+      <div class="ec-kythi">Kỳ Thi Tốt Nghiệp THPT Năm 2026</div>
+      <div class="ec-mon">Môn thi: <strong>TIẾNG ANH</strong></div>
+      <div class="ec-time">Thời gian: <strong>50 phút</strong>, không kể thời gian phát đề</div>
+    </div>
+  </div>
+  <div class="ec-body">
+    <div class="ec-row">
+      <div class="ec-field ec-field-wide">
+        <label class="ec-lbl" for="sn">Họ và tên thí sinh <span style="color:var(--red)">*</span></label>
+        <input type="text" id="sn" class="ec-in" placeholder="Nhập họ và tên đầy đủ…" autocomplete="name">
+        <span class="ferr" id="nerr">&#9888; Vui lòng nhập họ và tên trước khi nộp bài!</span>
+      </div>
+      <div class="ec-field">
+        <label class="ec-lbl" for="sd">Ngày tháng năm sinh</label>
+        <input type="date" id="sd" class="ec-in">
+      </div>
+    </div>
+    <div class="ec-row">
+      <div class="ec-field ec-field-sm">
+        <label class="ec-lbl" for="sc">Lớp</label>
+        <input type="text" id="sc" class="ec-in" placeholder="12A1">
+      </div>
+      <div class="ec-field ec-field-wide">
+        <label class="ec-lbl" for="ss">Trường THPT</label>
+        <input type="text" id="ss" class="ec-in" value="THPT Nghĩa Lộ">
+      </div>
+      <div class="ec-field">
+        <label class="ec-lbl" for="sng">Ngày thi</label>
+        <input type="date" id="sng" class="ec-in">
+      </div>
+    </div>
+    <div class="ec-row ec-row-box">
+      <div class="ec-box-group">
+        <div class="ec-box-lbl">Mã đề</div>
+        <div class="ec-boxes">
+          <input type="text" class="ec-box" maxlength="1" id="md1" oninput="bNext(this,'md2')" inputmode="numeric">
+          <input type="text" class="ec-box" maxlength="1" id="md2" oninput="bNext(this,'md3')" inputmode="numeric">
+          <input type="text" class="ec-box" maxlength="1" id="md3" oninput="bNext(this,'md4')" inputmode="numeric">
+          <input type="text" class="ec-box" maxlength="1" id="md4" inputmode="numeric">
+        </div>
+      </div>
+      <div class="ec-box-group">
+        <div class="ec-box-lbl">Phòng thi</div>
+        <div class="ec-boxes">
+          <input type="text" class="ec-box" maxlength="1" id="pt1" oninput="bNext(this,'pt2')" inputmode="numeric">
+          <input type="text" class="ec-box" maxlength="1" id="pt2" oninput="bNext(this,'pt3')" inputmode="numeric">
+          <input type="text" class="ec-box" maxlength="1" id="pt3" inputmode="numeric">
+        </div>
+      </div>
+      <div class="ec-box-group" style="flex:1;min-width:110px">
+        <div class="ec-box-lbl">Số báo danh</div>
+        <input type="text" id="ssbd" class="ec-in ec-in-sm" placeholder="..." style="max-width:130px">
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- EXAM BODY -->
+<div class="wrap" id="container"></div>
+
+<script>
+var AK   = {"1": "A", "2": "A", "3": "A", "4": "B", "5": "D", "6": "A", "7": "D", "8": "A", "9": "A", "10": "A", "11": "A", "12": "B", "13": "C", "14": "B", "15": "A", "16": "C", "17": "C", "18": "A", "19": "B", "20": "B", "21": "A", "22": "B", "23": "A", "24": "C", "25": "B", "26": "A", "27": "B", "28": "B", "29": "C", "30": "C", "31": "B", "32": "C", "33": "D", "34": "B", "35": "A", "36": "C", "37": "D", "38": "D", "39": "A", "40": "A"};
+var EX   = {"1": "which – đại từ quan hệ thay thế danh từ chỉ vật \"projects\", làm chủ ngữ cho \"highlight\". whose (sở hữu), who/whom (chỉ người) – sai.", "2": "leading – \"leading universities\" = các trường đại học hàng đầu. flying/heading/directing không phù hợp nghĩa.", "3": "range – \"a large range of\" (một loạt các...). Phù hợp khi liệt kê nhiều hoạt động đa dạng. amount dùng cho danh từ không đếm được.", "4": "organised – rút gọn mệnh đề quan hệ bị động: discussions [which are] organised by... → organised. being organised dùng cho hành động đang diễn ra.", "5": "enthusiasts – cần danh từ chỉ người (số nhiều) tương đồng với \"teachers\" và \"students\". Science enthusiasts = những người đam mê khoa học.", "6": "pick up – phrasal verb \"pick up skills\" = tiếp thu kỹ năng mới. turn up (xuất hiện), break up (chia tay), give up (từ bỏ).", "7": "wind directions (D) KHÔNG được đề cập trong đoạn 1. Bài chỉ nhắc electricity usage (A), battery storage (B), sunlight levels (C).", "8": "speed – accelerate = tăng tốc/thúc đẩy, gần nghĩa với speed (up). explain (giải thích), reduce (giảm), request (yêu cầu) – sai.", "9": "cleared – blocked = bị tắc/kẹt. Trái nghĩa là cleared (thông thoáng). stuck/obstructed/jammed là từ đồng nghĩa với blocked.", "10": "mapping tools – \"Mapping tools show... They also indicate...\". They thay thế cho \"Mapping tools\".", "11": "Saving electricity helps renewable-energy projects remain affordable and effective – paraphrase chuẩn: \"saves electricity\" = Saving electricity; \"keeps... viable\" = remain affordable and effective.", "12": "Members can trust information because blockchain protects it – thông tin đoạn 4: \"Blockchain tools secure every entry, encouraging members to trust...\"", "13": "Paragraph 3 – \"Automated energy-flow systems adjust power distribution every hour\" = theo dõi và điều chỉnh phân phối điện.", "14": "Paragraph 2 – Đoạn 2 đề cập Drones cảnh báo sớm sự cố (overheats, blocked) để ngăn ngừa hỏng hóc lớn.", "15": "c-a-d-b-e: (c) giới thiệu chủ đề → (a) lợi ích đầu tiên → (d) Furthermore: môi trường luyện kỹ năng → (b) As a result: kết quả → (e) In conclusion: kết luận.", "16": "d-e-b-a-c: (d) Emma hỏi về sách → (e) David trả lời + hỏi thêm → (b) Emma chọn ngôi sao → (a) David giới thiệu sách → (c) Emma đồng ý mua.", "17": "d-b-e-a-c: (d) giới thiệu học tập suốt đời → (b) lợi ích thích nghi → (e) Furthermore: tư duy phản biện → (a) lợi ích sâu hơn → (c) In summary: kết luận.", "18": "a-c-b: (a) Sarah giới thiệu kính → (c) Tom xin thử → (b) Sarah hướng dẫn.", "19": "c-a-b-d-e: (c) xin lỗi → (a) giải thích lý do → (b) cảm ơn sự thông cảm → (d) cập nhật tiến độ → (e) câu kết thư lịch sự.", "20": "choosing eco-friendly daily behaviours – đoạn 1: \"award points for eco-friendly choices\" (đi bộ, giảm rác thực phẩm...).", "21": "encouragement – incentive = sự khích lệ/động lực. experiment (thí nghiệm), restriction (hạn chế), investment (đầu tư) – sai.", "22": "They oversimplify the measurement of behaviours – đoạn 2: \"arguing that they oversimplify complex behaviours.\"", "23": "the technology – \"Administrators admit that the technology is not perfect but emphasise that it is designed...\" → it = the technology.", "24": "Integrating sustainability into many aspects of campus life – đoạn 3: \"integrate sustainability into academic subjects, extracurricular projects, and even dormitory management.\"", "25": "involvement – commitment = sự tham gia/cam kết gắn bó lâu dài. honesty (trung thực), independence (độc lập), achievement (thành tựu) – sai.", "26": "Community partnerships can enhance the impact of campus sustainability initiatives – suy luận từ đoạn 4: hợp tác sinh viên-dân cư giúp lan tỏa tác động tích cực.", "27": "[II] – câu \"not all people are convinced...\" dẫn nhập hoàn hảo cho đoạn 2 về sự hoài nghi, ngay trước \"Some students question...\"", "28": "Concerns about data privacy and inaccurate tracking make some students sceptical of the apps – tóm tắt 2 ý chính đoạn 2: quyền riêng tư + theo dõi không chính xác.", "29": "Low-carbon campus initiatives combine digital tools and behavioural changes but they still face several challenges – bao quát toàn bài: mô hình kết hợp (đoạn 1) + thách thức (đoạn 2-3) + tiềm năng (đoạn 4).", "30": "has now spread worldwide through online tutorials and repair cafés – câu cần động từ chính cho chủ ngữ \"The growing repair movement\". Các phương án A, B, D tạo mệnh đề phụ, thiếu V chính.", "31": "Enjoying the satisfaction of giving new life to old items, consumers increasingly choose repair over replacement – kết nối mạch văn từ \"người dân học sửa chữa\" sang hành vi tiêu dùng tích cực.", "32": "often providing more character and personal value than mass-produced items – mệnh đề bổ sung ý nghĩa cho \"Creative upcycling\". A dùng \"always\" sai thực tế, D dùng \"never\" sai.", "33": "that require manufacturers to make spare parts available for longer periods – mệnh đề quan hệ định nghĩa \"right to repair laws\": yêu cầu nhà sản xuất cung cấp linh kiện dài hơn.", "34": "When products are repaired and reused, natural resources are conserved and pollution is reduced – tóm tắt lợi ích cốt lõi: bảo tồn tài nguyên, giảm ô nhiễm. A/C/D lạc đề.", "35": "during – giới từ chỉ khoảng thời gian: \"during your study sessions\" (trong suốt buổi học).", "36": "because – \"Turn off notifications because they can distract you\" (vì chúng có thể gây xao nhãng). but (nhưng), so (vì vậy), nor (cũng không) – sai.", "37": "distracting small items – trật tự tính từ: Opinion (distracting) + Size (small) + Noun (items). A/B/C sắp xếp sai trật tự.", "38": "other – other + danh từ số nhiều (things). others (đại từ, không đứng trước N), the others (xác định), another + danh từ số ít.", "39": "effectively – manage time effectively (quản lý thời gian hiệu quả). suddenly (đột ngột), luckily (may mắn), rarely (hiếm khi) – sai nghĩa.", "40": "spinning – idiom \"spin one's wheels\" = giậm chân tại chỗ/tốn công vô ích. losing/turning/running không tạo thành thành ngữ đúng."};
+var SECS = [{"title": "Read the following announcement and choose the best option for each blank (1–6).", "passage": "<div class=\"p-title\">📢 Asian Youth Science Forum 2025 – Inspiring Future Innovators</div>Scheduled from September 2nd to 5th in Ho Chi Minh City, the Asian Youth Science Forum 2025 will welcome young researchers from 20 countries with the projects <span class=\"blank\">(1)&nbsp;______</span> highlight creative solutions to global challenges. The forum will also invite Vietnam's <span class=\"blank\">(2)&nbsp;______</span> universities to share their latest scientific achievements.<br><br>Participants will experience a large <span class=\"blank\">(3)&nbsp;______</span> of presentations, experiments, and interactive exhibitions. In addition, several panel discussions <span class=\"blank\">(4)&nbsp;______</span> by distinguished professors will provide deeper insights into sustainable development.<br><br>This forum offers a meaningful opportunity for teachers, students, and science <span class=\"blank\">(5)&nbsp;______</span> to exchange ideas and <span class=\"blank\">(6)&nbsp;______</span> new skills for their future academic paths.", "questions": [{"num": 1, "text": "(1) ______ highlight creative solutions to global challenges.", "opts": {"A": "which", "B": "whose", "C": "who", "D": "whom"}}, {"num": 2, "text": "The forum will also invite Vietnam's (2) ______ universities.", "opts": {"A": "leading", "B": "flying", "C": "heading", "D": "directing"}}, {"num": 3, "text": "Participants will experience a large (3) ______ of presentations, experiments, and interactive exhibitions.", "opts": {"A": "range", "B": "number", "C": "level", "D": "amount"}}, {"num": 4, "text": "Several panel discussions (4) ______ by distinguished professors will provide deeper insights.", "opts": {"A": "being organised", "B": "organised", "C": "organise", "D": "be organising"}}, {"num": 5, "text": "This forum offers a meaningful opportunity for teachers, students, and science (5) ______.", "opts": {"A": "enthusiastic", "B": "enthuse", "C": "enthusiastically", "D": "enthusiasts"}}, {"num": 6, "text": "To exchange ideas and (6) ______ new skills for their future academic paths.", "opts": {"A": "pick up", "B": "turn up", "C": "break up", "D": "give up"}}]}, {"title": "Read the passage and answer questions 7–14.", "passage": "<div class=\"p-title\">📖 Renewable Energy Communities</div>Renewable energy communities, where households work together to generate clean power, are growing rapidly in many countries. Smart meters, solar sensors, wind-speed trackers, and energy-analysis software provide real-time data that helps members optimise their shared systems. Collected information on sunlight levels, battery storage, and electricity usage allows energy teams to accelerate decisions on when to store, release, or share power. By acting quickly, communities avoid wasting energy and reduce dependence on the national grid.<br><br>Mapping tools show which rooftops receive the strongest sunlight and which areas should host additional solar panels. They also indicate places where wind turbines can operate safely. Drones deliver early alerts when equipment overheats or blades become blocked, so technicians can repair only the affected parts. This prevents large-scale breakdowns and helps lower maintenance costs for the entire community.<br><br>Automated energy-flow systems adjust power distribution every hour. Special software tracks household energy needs and forecasts weather patterns for the coming days. When energy demand increases or storms approach, the system changes the power route instantly. This saves electricity and keeps renewable-energy projects viable, especially in regions where weather conditions are unpredictable.<br><br>Digital platforms link households, engineers, and energy suppliers so they can update battery levels, output measurements, and transfer times immediately. Blockchain tools secure every entry, encouraging members to trust the recorded information. Over time, analytic programs compare seasonal data to predict energy shortages, plan resource allocation, and reveal weak points in the power network.", "questions": [{"num": 7, "text": "Which of the following is NOT mentioned in paragraph 1 as a type of collected real-time data?", "opts": {"A": "electricity usage", "B": "battery storage", "C": "sunlight levels", "D": "wind directions"}}, {"num": 8, "text": "The word \"accelerate\" in paragraph 1 can be best replaced by ______.", "opts": {"A": "speed", "B": "explain", "C": "reduce", "D": "request"}}, {"num": 9, "text": "The word \"blocked\" in paragraph 2 is OPPOSITE in meaning to ______.", "opts": {"A": "cleared", "B": "stuck", "C": "obstructed", "D": "jammed"}}, {"num": 10, "text": "The word \"They\" in paragraph 2 refers to ______.", "opts": {"A": "mapping tools", "B": "rooftops", "C": "solar panels", "D": "wind turbines"}}, {"num": 11, "text": "Which of the following best paraphrases the underlined sentence in paragraph 3: \"This saves electricity and keeps renewable-energy projects viable, especially in regions where weather conditions are unpredictable\"?", "opts": {"A": "Saving electricity helps renewable-energy projects remain affordable and effective.", "B": "Renewable-energy projects work only when weather is stable.", "C": "Saving electricity is unnecessary for the success of energy projects.", "D": "Renewable-energy projects are successful because they always produce extra power."}}, {"num": 12, "text": "Which of the following is TRUE according to paragraph 4?", "opts": {"A": "Blockchain makes energy data unsafe.", "B": "Members can trust information because blockchain protects it.", "C": "Energy suppliers upload data only when requested.", "D": "Analytic programs remove all seasonal information."}}, {"num": 13, "text": "Which paragraph mentions real-time tracking of power distribution?", "opts": {"A": "Paragraph 1", "B": "Paragraph 2", "C": "Paragraph 3", "D": "Paragraph 4"}}, {"num": 14, "text": "Which paragraph mentions a preventive measure against equipment failure?", "opts": {"A": "Paragraph 1", "B": "Paragraph 2", "C": "Paragraph 3", "D": "Paragraph 4"}}]}, {"title": "Mark the best arrangement of utterances or sentences (Questions 15–19).", "passage": null, "questions": [{"num": 15, "text": "Choose the best arrangement of sentences to make a cohesive paragraph:<br>a. These centers provide structured courses with experienced teachers, interactive activities, and access to diverse learning resources.<br>b. As a result, students can improve their English skills more effectively compared to self-study.<br>c. Studying at an English center offers numerous advantages for learners seeking to enhance their language proficiency.<br>d. Furthermore, English centers create an immersive environment where students can practice speaking and listening in real-life situations.<br>e. In conclusion, enrolling in an English center is a great way to develop language skills in a systematic and engaging manner.", "opts": {"A": "c-a-d-b-e", "B": "a-d-b-c-e", "C": "c-d-a-b-e", "D": "d-c-a-b-e"}}, {"num": 16, "text": "Choose the best arrangement of the following utterances to make a cohesive exchange:<br>a. David: That's wonderful! This book has beautiful pictures of stars and simple facts.<br>b. Emma: I love stars! My teacher said we will learn about them next week.<br>c. Emma: Perfect! I'll take it. Thank you for your help!<br>d. Emma: Excuse me, do you have any books about space?<br>e. David: Yes, we do! They're in the science section over there. Are you interested in planets or stars?", "opts": {"A": "c-a-e-d-b", "B": "a-b-c-d-e", "C": "d-e-b-a-c", "D": "b-a-d-e-c"}}, {"num": 17, "text": "Choose the best arrangement of sentences to make a cohesive paragraph:<br>a. The process of learning throughout life also cultivates a mindset of curiosity and resilience, empowering individuals to face challenges with confidence.<br>b. It allows individuals to continually adapt to the fast-paced changes of the modern world, ensuring they remain relevant and competitive in their fields.<br>c. In summary, lifelong learning is not merely a strategy for career advancement but also a means to lead a more fulfilling and enriched life.<br>d. Lifelong learning is a commitment that you need to make because it is essential and should be one of your top priorities.<br>e. Furthermore, engaging in continuous learning enhances critical thinking and problem-solving skills, fostering both personal and professional growth.", "opts": {"A": "d-b-c-e-a", "B": "d-e-c-a-b", "C": "d-b-e-a-c", "D": "d-c-a-b-e"}}, {"num": 18, "text": "Choose the best arrangement of the following utterances to make a cohesive exchange:<br>a. Sarah: Look! My new smart glasses can translate signs. I point, and it shows me words in English!<br>b. Sarah: Yes, here you are. Just tap the side button and look at the text. It's so easy!<br>c. Tom: Wow! Can I try them? I want to read that Japanese menu.", "opts": {"A": "a-c-b", "B": "a-b-c", "C": "c-a-b", "D": "b-c-a"}}, {"num": 19, "text": "Choose the best arrangement of sentences to complete the following formal letter:<br><em>Dear Sir,</em><br>a. Unfortunately, due to unforeseen challenges, I was unable to meet the original deadline.<br>b. I truly appreciate your patience and understanding regarding this matter.<br>c. I sincerely apologize for not finishing the plan on time as expected.<br>d. I am currently making the final adjustments and will submit the completed plan by the end of the week.<br>e. Please let me know if you have any urgent concerns or if there is anything I can do to minimize the inconvenience.<br><em>Yours faithfully,</em>", "opts": {"A": "a-b-c-d-e", "B": "c-a-b-d-e", "C": "c-b-a-d-e", "D": "a-d-b-e-c"}}]}, {"title": "Read the passage and answer questions 20–29.", "passage": "<div class=\"p-title\">📖 Low-Carbon Student Lifestyles</div>In an effort to create more sustainable campuses, many universities are experimenting with \"low-carbon student lifestyles,\" combining behavioural changes with digital innovation. Students are encouraged to walk or cycle instead of using motorbikes, reduce food waste in canteens, and participate in recycling programmes. These initiatives are supported by mobile apps that track carbon footprints and award points for eco-friendly choices. [I] The points can later be exchanged for discounts at bookstores or campus cafes, creating an incentive system that blends environmental responsibility with daily convenience.<br><br>Despite their popularity, such programmes face obstacles. [II] Some students question the accuracy of carbon-tracking apps, arguing that they oversimplify complex behaviours. For instance, a long walk under extreme heat might be given the same score as a short walk on a cool day, even though the environmental impact differs. Others fear that constant data monitoring could violate privacy, especially when apps record location, consumption habits, and travel patterns. Administrators admit that the technology is not perfect but emphasise that it is designed to educate rather than punish.<br><br>Another difficulty lies in ensuring long-term commitment. [III] While many students eagerly participate at first, enthusiasm often fades after a few weeks. Researchers suggest that universities need to integrate sustainability into academic subjects, extracurricular projects, and even dormitory management. When students understand how lifestyle choices relate to broader environmental systems, they are more likely to form lasting habits.<br><br>Nevertheless, early evidence indicates that low-carbon lifestyle projects can positively influence entire communities. [IV] At one university in Singapore, students collaborated with local residents to design solar-powered study corners in public parks. The initiative not only reduced electricity use on campus but also strengthened relationships between the university and neighbouring communities. As climate challenges intensify, such partnerships may become essential in building environmentally conscious cities.", "questions": [{"num": 20, "text": "According to paragraph 1, students earn rewards by ______.", "opts": {"A": "joining environmental clubs", "B": "choosing eco-friendly daily behaviours", "C": "attending sustainability workshops", "D": "competing in athletic activities"}}, {"num": 21, "text": "The word \"incentive\" in paragraph 1 is closest in meaning to ______.", "opts": {"A": "encouragement", "B": "experiment", "C": "restriction", "D": "investment"}}, {"num": 22, "text": "What is one criticism of carbon-tracking apps?", "opts": {"A": "They send inaccurate discount vouchers.", "B": "They oversimplify the measurement of behaviours.", "C": "They promote unhealthy dieting in canteens.", "D": "They encourage students to avoid walking."}}, {"num": 23, "text": "The word \"it\" in paragraph 2 refers to ______.", "opts": {"A": "the technology", "B": "the university", "C": "the discount system", "D": "the environment"}}, {"num": 24, "text": "According to paragraph 3, what helps increase long-term student engagement?", "opts": {"A": "Providing more prizes", "B": "Making the rules stricter", "C": "Integrating sustainability into many aspects of campus life", "D": "Reducing academic workloads"}}, {"num": 25, "text": "The word \"commitment\" in paragraph 3 is closest in meaning to ______.", "opts": {"A": "honesty", "B": "involvement", "C": "independence", "D": "achievement"}}, {"num": 26, "text": "What can be inferred from paragraph 4?", "opts": {"A": "Community partnerships can enhance the impact of campus sustainability initiatives.", "B": "Solar-powered spaces are too expensive for most universities to consider.", "C": "Only large universities can influence surrounding communities.", "D": "Students are reluctant to participate in off-campus projects."}}, {"num": 27, "text": "Which sentence best fits the passage? \"In fact, not all people are convinced that these digital tools truly reflect their environmental impact.\"", "opts": {"A": "[I]", "B": "[II]", "C": "[III]", "D": "[IV]"}}, {"num": 28, "text": "Which of the following best summarises paragraph 2?", "opts": {"A": "Students lack trust in sustainability programmes due to poor teaching methods.", "B": "Concerns about data privacy and inaccurate tracking make some students sceptical of the apps.", "C": "Carbon-tracking apps are technologically advanced but too expensive to maintain.", "D": "Administrators refuse to address problems with digital sustainability tools."}}, {"num": 29, "text": "Which of the following best summarises the whole passage?", "opts": {"A": "Low-carbon lifestyle programmes fail to encourage students to change behaviours.", "B": "Universities should replace traditional learning activities with green technology.", "C": "Low-carbon campus initiatives combine digital tools and behavioural changes but they still face several challenges.", "D": "Students are discouraged by complex sustainability rules and prefer traditional campus life."}}]}, {"title": "Read the passage and choose the best option for each blank (30–34).", "passage": "<div class=\"p-title\">📖 The Repair Revolution</div>In our modern throwaway society, products are often discarded before their actual end of life, which creates massive waste problems globally. Had manufacturers designed items to last longer, we would see less waste in our landfills today. The growing repair movement, which started in small communities, <span class=\"blank\">(30)&nbsp;______</span>. People are learning to fix their broken electronics; consequently, they save money and reduce environmental impact. <span class=\"blank\">(31)&nbsp;______</span>.<br><br>Many companies resist this movement because planned obsolescence drives their profits; however, sustainable businesses are embracing circular economy principles. Creative upcycling, <span class=\"blank\">(32)&nbsp;______</span>, transforms unwanted objects into beautiful, functional pieces. Children should be taught repair skills in schools to nurture a generation that values resources. Community workshops provide tools and expertise for those who want to extend their possessions' lifespan. Even governments are starting to recognize the importance of this shift, with some countries now implementing \"right to repair\" laws <span class=\"blank\">(33)&nbsp;______</span>.<br><br>The true value of repairing lies not just in waste reduction but in challenging our relationship with consumption. By reimagining how we use products, we create a more sustainable future where items are treasured rather than trashed. In a world with limited resources, the repair revolution isn't just practical — it's necessary for our planet's survival. <span class=\"blank\">(34)&nbsp;______</span>. Our choices today will determine whether future generations inherit a sustainable planet or a wasteland of discarded goods.", "questions": [{"num": 30, "text": "Choose the option that best fits blank (30):", "opts": {"A": "which has now enhanced creativity through artistic workshops and craft stores", "B": "having now improved sustainability through ecological awareness and green habits", "C": "has now spread worldwide through online tutorials and repair cafes", "D": "that has now connected people through digital platforms and social events"}}, {"num": 31, "text": "Choose the option that best fits blank (31):", "opts": {"A": "Creating the foundation of building fresh skills in workshops, businesses regularly train staff over experienced workers", "B": "Enjoying the satisfaction of giving new life to old items, consumers increasingly choose repair over replacement", "C": "Despite the challenges of facing economic pressure in markets, companies increasingly focus profit over sustainability", "D": "Seeking the opportunity of finding new ways to reduce costs, manufacturers deliberately choose automation over employment"}}, {"num": 32, "text": "Choose the option that best fits blank (32):", "opts": {"A": "always requiring less technical knowledge and financial investment than traditional repairs", "B": "usually containing fewer synthetic materials and chemicals than environmentally-friendly goods", "C": "often providing more character and personal value than mass-produced items", "D": "never developing the same durability and functional efficiency than modern technologies"}}, {"num": 33, "text": "Choose the option that best fits blank (33):", "opts": {"A": "required manufacturers to make quality products accessible at reasonable prices", "B": "where manufacturers will improve design features available in future generations", "C": "production teams make sustainable materials available for consumer products", "D": "that require manufacturers to make spare parts available for longer periods"}}, {"num": 34, "text": "Choose the option that best fits blank (34):", "opts": {"A": "When products are manufactured and distributed, quality standards are maintained, profit margins are increased", "B": "When products are repaired and reused, natural resources are conserved and pollution is reduced", "C": "While companies create innovative designs for consumers, marketing teams develop strategies and sales increase", "D": "As technology advances in modern industries, production costs fall significantly but environmental damage continues"}}]}, {"title": "Read the following leaflet and choose the best option for each blank (35–40).", "passage": "<div class=\"p-title\">📋 Simple Ways to Stay Focused While Studying</div>Maintaining concentration can be difficult, but a few small changes can help you stay focused <span class=\"blank\">(35)&nbsp;______</span> your study sessions.<br><br>• Turn off unnecessary phone notifications, <span class=\"blank\">(36)&nbsp;______</span> they can easily distract you.<br>• Organize your table and remove <span class=\"blank\">(37)&nbsp;______</span> that you don't need for learning.<br>• If you have several assignments, finish one task and then prepare for <span class=\"blank\">(38)&nbsp;______</span> things on your list.<br>• Use helpful tools to plan your breaks and manage your time more <span class=\"blank\">(39)&nbsp;______</span>.<br>• If you feel tired, take a short walk so you don't end up <span class=\"blank\">(40)&nbsp;______</span> your wheels without making progress.<br><br><em>(Adapted from Study Skills Guide)</em>", "questions": [{"num": 35, "text": "Maintaining concentration can be difficult, but a few small changes can help you stay focused (35) ______ your study sessions.", "opts": {"A": "during", "B": "in", "C": "for", "D": "at"}}, {"num": 36, "text": "Turn off unnecessary phone notifications, (36) ______ they can easily distract you.", "opts": {"A": "but", "B": "so", "C": "because", "D": "nor"}}, {"num": 37, "text": "Organize your table and remove (37) ______ that you don't need for learning.", "opts": {"A": "items distracting small", "B": "small items distracting", "C": "distracting items small", "D": "distracting small items"}}, {"num": 38, "text": "...finish one task and then prepare for (38) ______ things on your list.", "opts": {"A": "others", "B": "the others", "C": "another", "D": "other"}}, {"num": 39, "text": "...manage your time more (39) ______.", "opts": {"A": "effectively", "B": "suddenly", "C": "luckily", "D": "rarely"}}, {"num": 40, "text": "...so you don't end up (40) ______ your wheels without making progress.", "opts": {"A": "spinning", "B": "losing", "C": "turning", "D": "running"}}]}];
+var ANS  = {};
+var SUBMITTED = false;
+var TIMER_SEC = 3000;
+var timerInterval = null;
+
+/* ── TIMER ── */
+function startTimer() {
+  timerInterval = setInterval(function() {
+    if (SUBMITTED) { clearInterval(timerInterval); return; }
+    TIMER_SEC--;
+    if (TIMER_SEC <= 0) {
+      TIMER_SEC = 0;
+      updateTimerDisplay();
+      clearInterval(timerInterval);
+      autoSubmit();
+      return;
+    }
+    updateTimerDisplay();
+  }, 1000);
+}
+function updateTimerDisplay() {
+  var m = Math.floor(TIMER_SEC / 60);
+  var s = TIMER_SEC % 60;
+  var str = (m < 10 ? "0" : "") + m + ":" + (s < 10 ? "0" : "") + s;
+  var el = document.getElementById("timer");
+  el.textContent = str;
+  if (TIMER_SEC <= 300) {
+    el.classList.add("warn");
+  } else {
+    el.classList.remove("warn");
+  }
+}
+function autoSubmit() {
+  if (!SUBMITTED) {
+    var nel = document.getElementById("sn");
+    if (!nel.value.trim()) nel.value = "Học sinh";
+    doSubmit();
+  }
+}
+
+/* ── BUILD ── */
+function build() {
+  var c = document.getElementById("container");
+  c.innerHTML = "";
+  for (var si = 0; si < SECS.length; si++) {
+    var sec = SECS[si];
+    var sh = document.createElement("div");
+    sh.className = "sec-hd";
+    sh.innerHTML = "<div class=\"sec-title\">" + sec.title + "</div>";
+    c.appendChild(sh);
+    if (sec.passage) {
+      var pb = document.createElement("div");
+      pb.className = "passage";
+      pb.innerHTML = sec.passage;
+      c.appendChild(pb);
+    }
+    for (var qi = 0; qi < sec.questions.length; qi++) {
+      var q = sec.questions[qi];
+      var card = document.createElement("div");
+      card.className = "card";
+      card.id = "q" + q.num;
+      var oh = "";
+      var LL = ["A","B","C","D"];
+      for (var li = 0; li < LL.length; li++) {
+        var l = LL[li];
+        if (q.opts[l] !== undefined) {
+          oh += "<div class=\"opt\" id=\"o" + q.num + l + "\" onclick=\"pick(" + q.num + ",'" + l + "');\"><div class=\"oltr\">" + l + "</div><div class=\"otxt\">" + q.opts[l] + "</div></div>";
+        }
+      }
+      card.innerHTML = "<div class=\"qrow\"><div class=\"qnum\">" + q.num + "</div><div class=\"qtext\">" + q.text + "</div></div><div class=\"opts\">" + oh + "</div><div class=\"fb\" id=\"fb" + q.num + "\"></div><div class=\"fb-ex\" id=\"ex" + q.num + "\"></div>";
+      c.appendChild(card);
+    }
+  }
+  /* buttons */
+  var ac = document.createElement("div");
+  ac.className = "actions";
+  ac.innerHTML = "<button class=\"btn btnp\" onclick=\"submit()\">&#10003; Nộp bài &amp; Chấm điểm</button><button class=\"btn btns\" onclick=\"resetExam()\">&#8635; Làm lại từ đầu</button>";
+  c.appendChild(ac);
+  /* dashboard */
+  var dh = document.createElement("div");
+  dh.id = "dash";
+  dh.innerHTML = "<div class=\"dh\"><div class=\"dh-sub\">&#128202; Kết quả bài thi</div><h2>Tiếng Anh – THPT Nghĩa Lộ 2026</h2></div><div class=\"dstu\" id=\"dstu\"></div><div class=\"dscr\" id=\"dscr\"></div><div class=\"dcmt\" id=\"dcmt\"></div><div class=\"dshr\"><div class=\"shlbl\">&#128279; Link báo cáo gửi giáo viên:</div><input class=\"shurl\" id=\"surl\" readonly><button class=\"bcopy\" id=\"cbtn\" onclick=\"copyLink()\">&#128203; Copy Link</button></div><div class=\"atbl-wrap\"><h3>&#128203; Chi tiết đáp án</h3><table class=\"atbl\"><thead><tr><th>Câu</th><th>Đáp án đúng</th><th>Bạn chọn</th><th>KQ</th></tr></thead><tbody id=\"atbody\"></tbody></table></div>";
+  c.appendChild(dh);
+}
+
+/* ── PICK ── */
+function pick(n, l) {
+  if (SUBMITTED) return;
+  var LL = ["A","B","C","D"];
+  for (var i = 0; i < LL.length; i++) {
+    var el = document.getElementById("o" + n + LL[i]);
+    if (el) el.className = "opt";
+  }
+  var sel = document.getElementById("o" + n + l);
+  if (sel) sel.className = "opt sel";
+  ANS[n] = l;
+  updateProg();
+}
+
+function updateProg() {
+  var n = Object.keys(ANS).length;
+  document.getElementById("prog").style.width = (n / 40 * 100) + "%";
+  document.getElementById("ctr-bar").textContent = n + " / 40";
+  document.getElementById("ctr-txt").textContent = n + " / 40 câu";
+}
+
+/* ── SUBMIT ── */
+function submit() {
+  var nel = document.getElementById("sn");
+  var nerr = document.getElementById("nerr");
+  if (!nel.value.trim()) {
+    nel.classList.add("err");
+    nerr.classList.add("show");
+    nel.scrollIntoView({behavior:"smooth",block:"center"});
+    nel.focus();
+    return;
+  }
+  nel.classList.remove("err");
+  nerr.classList.remove("show");
+  doSubmit();
+}
+
+function doSubmit() {
+  if (SUBMITTED) return;
+  SUBMITTED = true;
+  clearInterval(timerInterval);
+
+  var sN = document.getElementById("sn").value.trim();
+  var sD = document.getElementById("sd").value;
+  var sC = document.getElementById("sc").value.trim() || "—";
+  var sS = document.getElementById("ss").value.trim() || "—";
+  var sNG = document.getElementById("sng").value;
+
+  var correct = 0;
+  var tbody = document.getElementById("atbody");
+  tbody.innerHTML = "";
+  for (var n = 1; n <= 40; n++) {
+    var ua = ANS[n] || null;
+    var ca = AK[n];
+    var ok = (ua === ca);
+    if (ok) correct++;
+    var LL = ["A","B","C","D"];
+    for (var i = 0; i < LL.length; i++) {
+      var l = LL[i];
+      var el = document.getElementById("o" + n + l);
+      if (!el) continue;
+      if (l === ca && l === ua) el.className = "opt cor";
+      else if (l === ua)        el.className = "opt wrg";
+      else if (l === ca)        el.className = "opt rev";
+      else                      el.className = "opt";
+    }
+    var card = document.getElementById("q" + n);
+    if (card) card.className = "card " + (ok ? "ok" : "no");
+    var fb = document.getElementById("fb" + n);
+    if (fb) {
+      fb.className = "fb show " + (ok ? "ok" : "no");
+      fb.textContent = ok ? "\u2713 Ch\u00ednh x\u00e1c!" : ("\u2717 Sai. \u0110\u00e1p \u00e1n \u0111\u00fang: " + ca + (ua ? ". B\u1ea1n ch\u1ecdn: " + ua : " (Ch\u01b0a tr\u1ea3 l\u1eddi)"));
+    }
+    var exEl = document.getElementById("ex" + n);
+    if (exEl && EX[n]) {
+      exEl.className = "fb-ex show";
+      exEl.textContent = "\u1ef0 " + EX[n];
+    }
+    var tr = document.createElement("tr");
+    tr.innerHTML = "<td><strong>" + n + "</strong></td><td>" + ca + "</td><td>" + (ua || "—") + "</td><td class=\"" + (ok?"ck":"cr") + "\">" + (ok?"\u2713":"\u2717") + "</td>";
+    tbody.appendChild(tr);
+  }
+
+  var unan = 40 - Object.keys(ANS).length;
+  var wrong = 40 - correct - unan;
+  var score = Math.round(correct / 40 * 1000) / 100;
+  var rc, rl, em, cm;
+  if      (score >= 9)   {rc="#2a7a48";rl="Gi\u1ecfi xu\u1ea5t s\u1eafc";em="\ud83c\udfc6";cm="Tuy\u1ec7t v\u1eddi! B\u1ea1n \u0111\u00e3 th\u1ec3 hi\u1ec7n s\u1ef1 am hi\u1ec3u s\u00e2u s\u1eafc v\u1ec1 ti\u1ebfng Anh. H\u00e3y ti\u1ebfp t\u1ee5c ph\u00e1t huy!";}
+  else if (score >= 7.5) {rc="#1a6e9e";rl="Gi\u1ecfi";em="\ud83e\udd47";cm="R\u1ea5t t\u1ed1t! B\u1ea1n n\u1eafm v\u1eefng ki\u1ebfn th\u1ee9c. H\u00e3y \u00f4n th\u00eam \u0111\u1ec3 \u0111\u1ea1t \u0111i\u1ec3m t\u1ed1i \u0111a!";}
+  else if (score >= 6.5) {rc="#c8940f";rl="Kh\u00e1";em="\ud83e\udd48";cm="Kh\u00e1 t\u1ed1t! H\u00e3y xem l\u1ea1i c\u00e1c ph\u1ea7n c\u00f2n sai \u0111\u1ec3 c\u1ea3i thi\u1ec7n th\u00eam nh\u00e9!";}
+  else if (score >= 5)   {rc="#d07020";rl="Trung b\u00ecnh";em="\ud83e\udd49";cm="B\u1ea1n \u0111\u00e3 v\u01b0\u1ee3t ng\u01b0\u1ee1ng trung b\u00ecnh. H\u00e3y d\u00e0nh th\u00eam th\u1eddi gian \u00f4n luy\u1ec7n t\u1eeb v\u1ef1ng v\u00e0 ng\u1eef ph\u00e1p!";}
+  else                   {rc="#c0392b";rl="Y\u1ebfu";em="\ud83d\udcda";cm="\u0110\u1eebng n\u1ea3n l\u00f2ng! H\u00e3y xem l\u1ea1i gi\u1ea3i th\u00edch t\u1eebng c\u00e2u \u1edf d\u01b0\u1edbi \u0111\u1ec3 hi\u1ec3u r\u00f5 h\u01a1n nh\u00e9!";}
+
+  var dob = "—";
+  if (sD) {var p=sD.split("-");dob=p[2]+"/"+p[1]+"/"+p[0];}
+  var ngThi = "—";
+  if (sNG) {var p2=sNG.split("-");ngThi=p2[2]+"/"+p2[1]+"/"+p2[0];}
+
+  document.getElementById("dstu").innerHTML =
+    "<div class=\"scc\"><div class=\"slbl\">H\u1ecd v\u00e0 t\u00ean</div><div class=\"sval\">" + sN + "</div></div>" +
+    "<div class=\"scc\"><div class=\"slbl\">Ng\u00e0y sinh</div><div class=\"sval\">" + dob + "</div></div>" +
+    "<div class=\"scc\"><div class=\"slbl\">L\u1edbp</div><div class=\"sval\">" + sC + "</div></div>" +
+    "<div class=\"scc\"><div class=\"slbl\">Tr\u01b0\u1eddng</div><div class=\"sval\">" + sS + "</div></div>";
+
+  document.getElementById("dscr").innerHTML =
+    "<div class=\"scoc g\"><div class=\"scn\">" + correct + "</div><div class=\"scl\">C\u00e2u \u0111\u00fang</div></div>" +
+    "<div class=\"scoc r\"><div class=\"scn\">" + (wrong+unan) + "</div><div class=\"scl\">C\u00e2u sai</div></div>" +
+    "<div class=\"scoc y\"><div class=\"scn\">" + score + "</div><div class=\"scl\">\u0110i\u1ec3m / 10</div></div>";
+
+  document.getElementById("dcmt").innerHTML =
+    "<div class=\"cem\">" + em + "</div>" +
+    "<div><div class=\"ctxt\">" + cm + "</div><span class=\"crnk\" style=\"background:" + rc + "\">" + rl + "</span></div>";
+
+  var maDe = (document.getElementById("md1").value||"")+(document.getElementById("md2").value||"")+(document.getElementById("md3").value||"")+(document.getElementById("md4").value||"");
+  var params = "name=" + encodeURIComponent(sN) + "&cls=" + encodeURIComponent(sC) + "&sch=" + encodeURIComponent(sS) + "&cor=" + correct + "&sc=" + score + "&rk=" + encodeURIComponent(rl) + "&de=" + encodeURIComponent(maDe);
+  document.getElementById("surl").value = location.href.split("?")[0] + "?" + params;
+
+  var dash = document.getElementById("dash");
+  dash.style.display = "block";
+  setTimeout(function(){dash.scrollIntoView({behavior:"smooth",block:"start"});}, 150);
+}
+
+/* ── COPY ── */
+function copyLink() {
+  var url = document.getElementById("surl").value;
+  var btn = document.getElementById("cbtn");
+  function done() {
+    btn.textContent = "\u2713 \u0110\u00e3 copy!";
+    btn.classList.add("copied");
+    setTimeout(function(){btn.textContent="\ud83d\udccb Copy Link";btn.classList.remove("copied");}, 2600);
+  }
+  if (navigator.clipboard && location.protocol==="https:") {
+    navigator.clipboard.writeText(url).then(done).catch(function(){document.getElementById("surl").select();document.execCommand("copy");done();});
+  } else {
+    var inp=document.getElementById("surl");inp.select();inp.setSelectionRange(0,99999);document.execCommand("copy");done();
+  }
+}
+
+/* ── RESET ── */
+function resetExam() {
+  ANS = {}; SUBMITTED = false; TIMER_SEC = 3000;
+  clearInterval(timerInterval);
+  ["sn","sd","sc","sng","ssbd"].forEach(function(id){var el=document.getElementById(id);if(el&&id!=="sc")el.value="";});
+  ["md1","md2","md3","md4","pt1","pt2","pt3"].forEach(function(id){var el=document.getElementById(id);if(el)el.value="";});
+  document.getElementById("sn").classList.remove("err");
+  document.getElementById("nerr").classList.remove("show");
+  updateTimerDisplay();
+  build(); updateProg();
+  startTimer();
+  window.scrollTo({top:0,behavior:"smooth"});
+}
+
+/* ── BOX NEXT ── */
+function bNext(el, nextId) { if(el.value.length>=1){var nx=document.getElementById(nextId);if(nx)nx.focus();} }
+
+/* ── POPUP CLOSE ── */
+function closePop(){document.getElementById("pov").className="pov";}
+document.getElementById("pov").addEventListener("click",function(e){if(e.target===this)closePop();});
+
+/* ── TEACHER POPUP ── */
+(function(){
+  var p=new URLSearchParams(location.search);
+  var name=p.get("name");
+  if(!name)return;
+  var cls=p.get("cls")||"—",sch=p.get("sch")||"—",cor=p.get("cor")||"?",sc=p.get("sc")||"?",rk=p.get("rk")||"—",de=p.get("de")||"—";
+  document.getElementById("ptitle").textContent="Báo cáo: "+name;
+  document.getElementById("pbdy").innerHTML=
+    "<div class=\"prow\"><span class=\"pk\">\ud83d\udc64 Họ và tên</span><span class=\"pv\">"+name+"</span></div>"+
+    "<div class=\"prow\"><span class=\"pk\">\ud83c\udfeb Lớp</span><span class=\"pv\">"+cls+"</span></div>"+
+    "<div class=\"prow\"><span class=\"pk\">\ud83c\udfd7 Trường</span><span class=\"pv\">"+sch+"</span></div>"+
+    "<div class=\"prow\"><span class=\"pk\">\ud83c\udfe0 Mã đề</span><span class=\"pv\">"+de+"</span></div>"+
+    "<div class=\"prow\"><span class=\"pk\">\u2705 Số câu đúng</span><span class=\"pv\">"+cor+" / 40</span></div>"+
+    "<div class=\"prow\"><span class=\"pk\">\ud83c\udfc6 Điểm số</span><span class=\"pv big\">"+sc+" / 10</span></div>"+
+    "<div class=\"prow\"><span class=\"pk\">\ud83d\udccc Xếp loại</span><span class=\"pv\">"+rk+"</span></div>";
+  document.getElementById("pov").className="pov show";
+})();
+
+build();
+updateProg();
+updateTimerDisplay();
+startTimer();
+</script>
+</body>
+</html>
